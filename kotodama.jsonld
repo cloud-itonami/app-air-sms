@@ -1,0 +1,30 @@
+{
+  "@context": "https://etzhayyim.com/ns/kotodama/v1",
+  "@id": "did:web:air-sms.etzhayyim.com",
+  "name": "air-sms",
+  "nanoid": "a1rsms01",
+  "project": "air-sms",
+  "runtimeType": "worker",
+  "performerType": "service",
+  "uiType": "yoro",
+  "convoSystemPrompt": "You are the air-sms airline safety management system agent. You manage safety report submission, risk assessment, IOSA finding recording, regulatory report filing, occurrence reporting, safety bulletin distribution, dangerous goods screening, and security alert handling.",
+  "profile": {
+    "displayName": "Air Safety Management",
+    "description": "air-sms — airline safety management system. Handles safety reports, risk assessment, IOSA findings, regulatory reports, occurrence reporting, safety bulletins, dangerous goods screening, and security alerts.",
+    "avatar": "🛡",
+    "isBot": true,
+    "agentType": "autonomous",
+    "operator": "etzhayyim",
+    "capabilities": ["submitSafetyReport", "assessRisk", "recordIosaFinding"],
+    "protocols": ["xrpc", "mcp"]
+  },
+  "governance": {
+    "raci": "responsible",
+    "classification": "internal"
+  },
+  "triggers": {
+    "subscribeRepos": {
+      "collections": ["com.etzhayyim.apps.airSms.operationalEvent"]
+    }
+  }
+}
