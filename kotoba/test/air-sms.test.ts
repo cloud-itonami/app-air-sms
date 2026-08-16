@@ -151,6 +151,62 @@ describe("air-sms kotoba (kotoba-E2E split)", () => {
       expect(cov.securityAlertCount).toBe(1);
       expect(cov.regulatoryReportCount).toBe(1);
       expect(cov.eventsByType?.diversion).toBe(2);
+      expect(cov.truncated).toBe(false);
+    });
+
+    // A scan that stopped at the cap must not be reportable as a complete one.
+    // Each collection is scanned under the same maxScan, so each one alone has
+    // to be able to raise the flag — including the three plaintext catalogs
+    // (hazard / safetyBulletin / dangerousGoodsCheck) that the flag once omitted.
+    it("raises truncated when any single collection alone reaches maxScan", async () => {
+      const atCap = async (fill: () => Promise<unknown>, count: string) => {
+        e = new MockEtzhayyim({ did: OWNER });
+        await fill();
+        const cov: Record<string, any> = await coverage(e, { maxScan: 2 });
+        expect(cov[count]).toBe(2);
+        expect(cov.truncated).toBe(true);
+      };
+
+      await atCap(async () => {
+        await recordEvent(e, { eventId: "e1", eventType: "diversion" });
+        await recordEvent(e, { eventId: "e2", eventType: "go-around" });
+      }, "operationalEventCount");
+
+      await atCap(async () => {
+        await registerHazard(e, { hazardId: "h1", category: "runway", description: "a", likelihood: 3, severity: 4, riskScore: 70 });
+        await registerHazard(e, { hazardId: "h2", category: "weather", description: "b", likelihood: 2, severity: 5, riskScore: 60 });
+      }, "hazardCount");
+
+      await atCap(async () => {
+        await registerHazard(e, { hazardId: "h1", category: "runway", description: "a", likelihood: 3, severity: 4, riskScore: 70 });
+        await distributeBulletin(e, { bulletinId: "b1", hazardId: "h1", title: "t1" });
+        await distributeBulletin(e, { bulletinId: "b2", hazardId: "h1", title: "t2" });
+      }, "safetyBulletinCount");
+
+      await atCap(async () => {
+        await screenDg(e, { checkId: "d1", unNumber: "UN1845", properShippingName: "Dry ice", hazardClass: 9, result: "accepted" });
+        await screenDg(e, { checkId: "d2", unNumber: "UN1263", properShippingName: "Paint", hazardClass: 3, result: "rejected" });
+      }, "dangerousGoodsCheckCount");
+
+      await atCap(async () => {
+        await submitReport(e, { reportId: "r1", reporterDid: "did:web:p", reportKind: "asr", narrative: "n1", riskScore: 50 });
+        await submitReport(e, { reportId: "r2", reporterDid: "did:web:p", reportKind: "asr", narrative: "n2", riskScore: 50 });
+      }, "safetyReportCount");
+
+      await atCap(async () => {
+        await recordFinding(e, { findingId: "f1", iosaSection: "FLT-2", auditeeDid: "did:web:s", conformity: "finding", detail: "d1", severityScore: 60 });
+        await recordFinding(e, { findingId: "f2", iosaSection: "FLT-3", auditeeDid: "did:web:s", conformity: "finding", detail: "d2", severityScore: 40 });
+      }, "iosaFindingCount");
+
+      await atCap(async () => {
+        await raiseAlert(e, { alertId: "a1", alertType: "avsec", detail: "d1", threatLevel: "high" });
+        await raiseAlert(e, { alertId: "a2", alertType: "avsec", detail: "d2", threatLevel: "low" });
+      }, "securityAlertCount");
+
+      await atCap(async () => {
+        await fileReport(e, { filingId: "g1", authority: "faa", filingType: "mor", content: "c1" });
+        await fileReport(e, { filingId: "g2", authority: "easa", filingType: "sdr", content: "c2" });
+      }, "regulatoryReportCount");
     });
   });
 });

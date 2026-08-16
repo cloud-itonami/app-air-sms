@@ -450,7 +450,11 @@ export async function coverage(e: Etzhayyim, input: CoverageInput = {}): Promise
   const iosaFindingCount = (await scanFindings(e, maxScan)).length;
   const securityAlertCount = (await scanAlerts(e, maxScan)).length;
   const regulatoryReportCount = (await scanRegReports(e, maxScan)).length;
-  return {
+  // Every count is scanned under the same `maxScan`, so every count can hit it.
+  // Derive `truncated` from the counts themselves rather than from a hand-listed
+  // subset: a capped scan must never be reported as a complete one, and a count
+  // added later cannot be left out of the check.
+  const counts = {
     operationalEventCount,
     hazardCount,
     safetyBulletinCount,
@@ -459,12 +463,10 @@ export async function coverage(e: Etzhayyim, input: CoverageInput = {}): Promise
     iosaFindingCount,
     securityAlertCount,
     regulatoryReportCount,
+  };
+  return {
+    ...counts,
     eventsByType,
-    truncated:
-      operationalEventCount >= maxScan ||
-      safetyReportCount >= maxScan ||
-      iosaFindingCount >= maxScan ||
-      securityAlertCount >= maxScan ||
-      regulatoryReportCount >= maxScan,
+    truncated: Object.values(counts).some((n) => n >= maxScan),
   };
 }
