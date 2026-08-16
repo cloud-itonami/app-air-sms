@@ -4,11 +4,11 @@
   "project": "etzhayyim-project-air-sms",
   "name": "etzhayyim-project-air-sms",
   "kind": "cloudflare surface",
-  "routeCount": 0,
-  "routes": [],
-  "vars": [],
+  "routeCount": 2,
+  "routes": ["a1rsms01.etzhayyim.com/*", "air-sms.etzhayyim.com/*"],
+  "vars": ["AGENTGATEWAY_MCP_ROUTER_URL", "APP_CAPABILITIES", "APP_DESCRIPTION", "APP_DISPLAY_NAME", "APP_FRAMEWORK", "APP_NANOID", "APP_PERFORMER_TYPE", "APP_UI_TYPE"],
   "xrpc": true,
-  "relativePath": "60-apps/etzhayyim-project-air-sms/svelte/src/routes/+page.svelte"
+  "relativePath": "svelte/src/routes/+page.svelte"
 };
 </script>
 
