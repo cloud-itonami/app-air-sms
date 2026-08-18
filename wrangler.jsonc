@@ -1,16 +1,12 @@
 {
   "name": "kotodama-a1rsms01",
-  "main": "svelte/.svelte-kit/cloudflare/_worker.js",
+  "main": "dist/worker.js",
   "compatibility_date": "2025-03-17",
-  "compatibility_flags": [
-    "nodejs_compat",
-    "nodejs_als"
-  ],
   "vars": {
     "APP_CAPABILITIES": "[\"submitSafetyReport\",\"assessRisk\",\"recordIosaFinding\"]",
     "APP_DESCRIPTION": "air-sms — airline safety management system. Handles safety reports, risk assessment, IOSA findings, regulatory reports, occurrence reporting, safety bulletins, dangerous goods screening, and security alerts.",
     "APP_DISPLAY_NAME": "Air Safety Management",
-    "APP_FRAMEWORK": "sveltekit-edge-bff",
+    "APP_FRAMEWORK": "cljs-esm-worker",
     "APP_NANOID": "a1rsms01",
     "APP_PERFORMER_TYPE": "service",
     "APP_UI_TYPE": "yoro",
@@ -33,11 +29,5 @@
       "pattern": "air-sms.etzhayyim.com/*",
       "zone_name": "etzhayyim.com"
     }
-  ],
-  "assets": {
-    "directory": "./svelte/.svelte-kit/cloudflare/client",
-    "binding": "ASSETS",
-    "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none"
-  }
+  ]
 }
