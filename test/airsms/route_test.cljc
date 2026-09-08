@@ -1,6 +1,6 @@
 (ns airsms.route-test
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [airsms.route :as route]
             [airsms.view :as view]))
 
