@@ -118,7 +118,7 @@ app 固有 CSS は 3 行。CSS は shadow.resource/inline で bundle に焼く
 - airsms.route-test: 6 tests / 30 assertions、0 failures（nbb、ビルド不要）
 - ページ描画 → design-quality score **100.00**（gate 95）。--extra-axes 込みの
   12 軸でも 100.00
-- shadow-cljs release worker: 55 files / 12 compiled / 0 warnings、
+- amu compile --target wasm32-browser worker: 55 files / 12 compiled / 0 warnings、
   dist/worker.js 246,005 bytes
 - scripts/smoke-worker.cljs: ビルド済み bundle を import して **22 項目** PASS、exit 0
 - scripts/verify-docs-claims.cljs: 全 claim PASS、exit 0
