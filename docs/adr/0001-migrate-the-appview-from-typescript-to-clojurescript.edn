@@ -35,7 +35,7 @@ route 一覧・var 一覧・routeCount を literal の object として手で持
 docs/operator-quickstart.md 自身がそう書いている ——
 if you change routes or vars in wrangler.jsonc, this object does not follow。
 
-この workspace の正本言語は cljs と kotoba である。superproject CLAUDE.md の
+この workspace の正本言語は cljs と kotoba である。superproject AGENTS.md の
 runtime 順序は kotoba wasm > clojurewasm > ClojureScript > nbb で、TypeScript は
 そこに無い。候補の 2 つはどちらも TypeScript なので、どちらを選んでも正本には着地しない。
 
