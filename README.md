@@ -113,7 +113,7 @@ etzhayyim/com-etzhayyim-sdk-mock  c857ff9b…  gh api → 404   git fetch → ty
 **API の方が間違っている。** SHA の存在が判断を左右するときは git に訊くこと
 （この罠はこのファミリーで複数回観測されている）。
 
-## いま在るもの — 27 ファイル
+## いま在るもの — 28 ファイル
 
 | 面 | ファイル |
 |---|---|
@@ -252,6 +252,8 @@ deploy 先も中継先も、いま存在しない。`/xrpc/` は到達できな�
 3. **ホストが NXDOMAIN**（上記）。deploy するか retire するかは別の決定。
 
 ## Static edition (IPFS)
+
+Published name: `ipns://k51qzi5uqu5djscfrr5cgssbp6ekjoiuxctnt9eunqkfxowkuetg2lnlvzxh53` (recorded with the site CID in `kotoba.app.edn`). Public HTTPS entrance: `https://k51qzi5uqu5djscfrr5cgssbp6ekjoiuxctnt9eunqkfxowkuetg2lnlvzxh53.ipns.220-146-170-114.sslip.io/`.
 
 `GET /` のページは要求ごとに変わらないので、Worker 無しの **静的版** として IPFS に
 置ける（`ipns://k51…` と `k51….ipns` の gateway origin から配る。正本はその IPNS 名で、
